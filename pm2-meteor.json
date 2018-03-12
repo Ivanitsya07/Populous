@@ -1,0 +1,29 @@
+{
+  "appName": "platform",
+  "appLocation": {
+    "local": "./"
+  },
+  "meteorSettingsLocation": "~/Projects/populous/settings.json",
+  "meteorSettingsInRepo": false,
+  "prebuildScript": "",
+  "meteorBuildFlags": "--architecture os.linux.x86_64",
+  "env": {
+    "ROOT_URL": "http://beta-platform.populous.co",
+    "PORT": 3000,
+    "MONGO_URL": "mongodb://localhost:27017/meteor",
+    "MAIL_URL": "smtps://AKIAIQMBXLJYYNCYVSVA:AuiWNqWhXi4b6ehh%2F84ryf99u5G3XymGY6upu1mIFKlZ@email-smtp.us-east-1.amazonaws.com:465"
+  },
+  "server": {
+    "host": "52.49.163.25",
+    "username": "ubuntu",
+    "deploymentDir": "/home/ubuntu/pm2-meteor",
+    "loadProfile": "",
+    "nvm": {
+      "bin": "",
+      "use": ""
+    },
+    "exec_mode": "cluster_mode",
+    "instances": 1,
+    "pem": "../key.pem"
+  }
+}
