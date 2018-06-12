@@ -1,6 +1,6 @@
-import { Meteor } from 'meteor/meteor';
-import { User } from 'meteor/populous:api';
-import { userRoles, fixtures } from 'meteor/populous:constants';
+import {Meteor} from 'meteor/meteor';
+import {User, Invoice} from 'meteor/populous:api';
+import {userRoles, fixtures} from 'meteor/populous:constants';
 
 // Config imports \\
 import 'meteor/populous:api/lib/accounts/server/accounts-hooks';
@@ -12,7 +12,6 @@ import '../imports/ipfs/server';
 import '../imports/eth-comm/server';
 
 Meteor.startup(() => {
-
   // Setup fixtures
   if (User.find().count() === 0) {
     console.log('=> Installing Accounts fixtures');
@@ -20,7 +19,18 @@ Meteor.startup(() => {
     Accounts.createUser(fixtures.users.investor);
   }
 
-  if (User.find({ role: userRoles.admin }).count() === 0) {
+  if(Invoice.find().count() === 0){
+    console.log('=> Installing Invoices fixtures');
+    const borrowerId = User.findOne({role: userRoles.borrower})._id;
+
+    fixtures.invoices(borrowerId).forEach(
+      invoice => {
+        Invoice.insert(invoice);
+      }
+    )
+  }
+
+  if (User.find({role: userRoles.admin}).count() === 0) {
     console.log('=> Installing Admin fixtures');
     Accounts.createUser(fixtures.users.admin);
   }
