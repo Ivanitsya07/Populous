@@ -4,6 +4,7 @@ import { reducer as toastrReducer } from 'react-redux-toastr';
 import { routerReducer } from 'react-router-redux'
 
 import app from '../ui/wrappers/PrivateApp/modules';
+import InvoicesList from '../ui/routes/Invoices/modules';
 import addInvoice from '../ui/routes/AddInvoice/modules';
 import invoiceDetail from '../ui/routes/Invoice/modules';
 import uploadKYC from '../ui/routes/Upload/modules';
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   router: routerReducer,
   toastr: toastrReducer,
   app,
+  InvoicesList,
   addInvoice,
   invoiceDetail,
   uploadKYC,
