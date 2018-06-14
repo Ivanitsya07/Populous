@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Jumbotron, Button } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import { statuses } from 'meteor/populous:constants';
+import { Card } from '../styled-components/Divs';
+import Button from '../styled-components/Button';
+import { H3, P } from '../styled-components/Typography/headers';
+import ButtonLink from '../styled-components/ButtonLink';
 
 const UnverifiedBanner = ({ status }) => {
 
@@ -10,9 +14,7 @@ const UnverifiedBanner = ({ status }) => {
     <p key="0">Your account is currently unverified.</p>,
     <p key="1">Please click the button below to begin the verification process</p>,
     <p className="lead" key="2">
-      <Link to="/upload" className="btn btn-primary">
-        Verify account
-      </Link>
+      <ButtonLink primary to={'/upload'}>Verify account</ButtonLink>
     </p>
   ];
 
@@ -21,9 +23,7 @@ const UnverifiedBanner = ({ status }) => {
       <p key="0">Your account verification was declined by our admins.</p>,
       <p key="1">Please click the button below to read why and submit a new application.</p>,
       <p className="lead" key="2">
-        <Link to="/upload/declined" className="btn btn-danger">
-          View rejection notice
-        </Link>
+        <ButtonLink to={'/upload/declined'}>View rejection notice</ButtonLink>
       </p>
     ];
   } else if (status === statuses.pending) {
@@ -35,14 +35,18 @@ const UnverifiedBanner = ({ status }) => {
   }
 
   return (
-    <Jumbotron>
-      <h1 className="display-5">Can't access this yet!</h1>
-      <p className="lead">
-        Before you add an invoice we must verify your identity.
-      </p>
-      <hr className="my-2" />
-      { body }
-    </Jumbotron>
+    <Row>
+      <Col>
+        <Card className="m-t-40 text-center">
+          <H3>You can't access this yet!</H3>
+          <P opacity={0.8}>
+            Before you add an invoice we must verify your identity.
+          </P>
+          <hr />
+          { body }
+        </Card>
+      </Col>
+    </Row>
   );
 };
 

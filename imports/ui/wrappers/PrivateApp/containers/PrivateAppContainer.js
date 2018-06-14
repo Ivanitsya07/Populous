@@ -2,46 +2,39 @@ import { Meteor } from 'meteor/meteor';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTracker } from 'meteor/react-meteor-data';
-import { User } from 'meteor/populous:api';
 
 import PrivateApp from '../components/PrivateApp';
-import { SET_CURRENT_USER, APP_LOADING } from '../modules';
+import { loadUser } from '../modules/actions/loadUser';
 
-const reduxData = connect(
-  state => state.app,
-  dispatch => ({
-    init: user => {
-      dispatch({ type: SET_CURRENT_USER, user });
-      dispatch({ type: APP_LOADING, loading: false });
-    },
-  })
-);
+const mapStateToProps = ({ app }) => ({
+  loading: app.loading,
+  currentUser: app.currentUser
+});
 
-// Subscribe to the meteor db and init the store
-const meteorData = withTracker(({ loading, init }) => {
+const mapDispatchToProps = dispatch => ({
+  init: _id => dispatch(loadUser(_id)),
+});
 
-  // Make sure the data for the current user is available
-  const users = Meteor.subscribe('accounts.user', Meteor.userId());
+// We need to do this crap becuase meteor runs this
+// in parallel with Meteor.loggingIn
+// https://docs.meteor.com/api/accounts.html#Meteor-loggingIn
+// and Meteor.userId() isn't available until Meteor.loggingIn
+// is false.
+const meteorData = withTracker(({ currentUser, init }) => {
 
-  // Publish all of the eth-ids
-  const ethIds = Meteor.subscribe('ethIds.all');
-
-  const dataReady = (
-    users.ready() &&  // wait for user subscription
-    ethIds.ready() && // wait for ethIds subscription
-    !Meteor.loggingIn() // wait for Meteor to find current user session
-  );
-
-  // If the app state is loading, and the data is ready,
-  // init the app with the user data
-  if (loading && dataReady) {
-    const user = User.findOne(Meteor.userId());
-    init(user);
+  // wait for Meteor to find current user session
+  // andn then init the current user
+  if (!currentUser && !Meteor.loggingIn()) {
+    init(Meteor.userId());
   }
 
   // We have to return an object for withTracker to work
   return {};
 });
 
-// Let reduxData override any values set in meteorData
+const reduxData = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+
 export default compose(reduxData, meteorData)(PrivateApp);

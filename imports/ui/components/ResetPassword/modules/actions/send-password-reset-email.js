@@ -1,12 +1,9 @@
-import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
 import { toastr } from 'react-redux-toastr';
-import { push } from 'react-router-redux';
 import { User } from 'meteor/populous:api';
 
 // This thunk sends a password reset email to the user
 // based on the email address given
-const sendPasswordResetEmail = email => {
+const sendPasswordResetEmail = (email, successCallback) => {
   return dispatch => {
 
     if (!email) {
@@ -17,6 +14,10 @@ const sendPasswordResetEmail = email => {
       if (err) {
         toastr.error('Error', err.reason);
         return;
+      }
+
+      if(typeof successCallback === 'function'){
+        successCallback();
       }
 
       toastr.success(

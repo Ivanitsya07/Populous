@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { FormGroup, Label, Input, Container, Row, Col } from 'reactstrap';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
@@ -7,123 +7,110 @@ import { renderInputReactstrap } from '../../../form-helpers/renderInputTextFiel
 import { renderCountrySelector } from '../../../form-helpers/renderSelectFields';
 import renderDropzoneInput from '../../../form-helpers/renderDropzoneInput';
 import renderCheckbox from '../../../form-helpers/renderCheckbox';
-
-import Button from '../../../components/styled-components/Button';
 import KYCValidation from './KYCValidation';
+import Button from '../../../components/styled-components/Button';
+import { Small, P, H5 } from '../../../components/styled-components/Typography/headers';
 
 let KYCWizardFormCompanyInformation = props => {
   const { handleSubmit, currentUser } = props;
   return (
-    <form onSubmit={handleSubmit}>
-      <h5>1. Company Information</h5>
-      <div style={{ height: '16px' }}/>
-      <Container>
-        <Row>
-          <Col xs={12} md={6}>
-            <Field
-              name="companyName"
-              type="text"
-              component={renderInputReactstrap}
-              label="Company Name"
-              placeholder={'Company Name'}
-            />
-            <Field
-              name="companyNumber"
-              type="text"
-              component={renderInputReactstrap}
-              label="Company Number"
-              placeholder={'Company Number'}
-            />
+    <form className="form multi" onSubmit={handleSubmit}>
+      <H5 opacity={0.7} transform="uppercase" className="text-center m-b-30">
+        Company
+      </H5>
 
-            {/* TODO: Make searchable select  */}
-            <Field
-              name="companyDescription"
-              type="text"
-              component={renderInputReactstrap}
-              label="Company Description"
-              placeholder={'Company Description'}
-            />
+      {currentUser.isBorrower() &&
+      <Row>
+        <Col xs={12} md={6}>
+          <Field
+            name="companyName"
+            type="text"
+            component={renderInputReactstrap}
+            label="Company Name"
+            placeholder={''}
+          />
+          <Field
+            name="companyNumber"
+            type="text"
+            component={renderInputReactstrap}
+            label="Company Number"
+            placeholder={''}
+          />
 
-            <Field name="country" component={renderCountrySelector} />
-          </Col>
-          <Col xs={12} md={6}>
-            <Field
-              name="addressLine1"
-              type="text"
-              component={renderInputReactstrap}
-              label="Address line 1"
-              placeholder={'Address line 1'}
-            />
-
-            <Field
-              name="addressLine2"
-              type="text"
-              component={renderInputReactstrap}
-              label="Address line 2"
-              placeholder={'Address line 2'}
-            />
-
-            <Field
-              name="city"
-              type="text"
-              component={renderInputReactstrap}
-              label="City"
-              placeholder={'City'}
-            />
-
-            <Field
-              name="postcode"
-              type="text"
-              component={renderInputReactstrap}
-              label="Postcode"
-              placeholder={'Postcode'}
-            />
-          </Col>
-        </Row>
-
-        <div style={{ height: '32px' }} />
-
-        <Row>
-          <Col xs={12}>
-            {/* Bank Statements */}
-            <div
-              style={{
-                maxWidth: '330px',
-                margin: '0 auto',
-                textAlign: 'center'
-              }}
-            >
+          <Field
+            name="companyDescription"
+            type="textarea"
+            component={renderInputReactstrap}
+            label="Company Description"
+            placeholder={''}
+          />
+        </Col>
+        <Col xs={12} md={6}>
+          <Field
+            name="addressLine1"
+            type="text"
+            component={renderInputReactstrap}
+            label="Address"
+            placeholder={''}
+            className="m-b-0"
+          />
+          <Field
+            name="addressLine2"
+            type="text"
+            component={renderInputReactstrap}
+            label=""
+            placeholder={''}
+          />
+          <Row>
+            <Col md={8}>
               <Field
-                name="bankStatements"
-                component={renderDropzoneInput}
-                acceptedFiles=".pdf, .doc, .docx, .pages, .xls, .xlsx, .numbers"
-                uploadFileTypeDesc="Bank Statements"
+                name="city"
+                type="text"
+                component={renderInputReactstrap}
+                label="City"
+                placeholder={''}
               />
-            </div>
-          </Col>
-        </Row>
+            </Col>
+            <Col md={4}>
+              <Field
+                name="postcode"
+                type="text"
+                component={renderInputReactstrap}
+                label="Postcode"
+                placeholder={''}
+              />
+            </Col>
+          </Row>
 
-        <Row>
-          <Col xs={12}>
-            {currentUser.isBorrower() &&
-              <div style={{ textAlign: 'left' }}>
-                <p>
-                  Please confirm that there are no other accounts connected to
-                  this company:
-                </p>
-                <Field
-                  name="onlyAccountConfirmation"
-                  component={renderCheckbox}
-                  type="checkbox"
-                  label={"This is the sole account related to the company."}
-                />
-              </div>}
-          </Col>
-        </Row>
-      </Container>
-      <div>
-        <div style={{ height: '32px' }} />
-        <Button type="submit" className="next">
+          <Field name="country" component={renderCountrySelector} />
+        </Col>
+      </Row>}
+
+      <Row>
+        <Col xs={12}>
+          <Field
+            name="bankStatements"
+            component={renderDropzoneInput}
+            acceptedFiles=".pdf, .doc, .docx, .pages, .xls, .xlsx, .numbers"
+            uploadFileTypeDesc="Plesae upload the lastest company's bank statements"
+          />
+        </Col>
+      </Row>
+
+      {currentUser.isBorrower() &&
+      <Row>
+        <Col xs={12} className="text-center m-t-20">
+          <Field
+            name="onlyAccountConfirmation"
+            component={renderCheckbox}
+            type="checkbox"
+            label={'I confirm that there are no other accounts connected to this company.'}
+          />
+        </Col>
+      </Row>}
+
+      <div className="text-center m-t-30">
+        <Button primary type="submit" className="next" width="160px">
           Next
         </Button>
       </div>

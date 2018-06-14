@@ -1,87 +1,59 @@
 import React from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  CardBody,
-  Table
-} from 'reactstrap';
+import { Container, Row, Col, CardBody, Table } from 'reactstrap';
 import { Link } from 'react-router-dom'
-import GhostButton from '../../../../components/styled-components/GhostButton';
 import { Card, CardTitle } from '../../../../components/styled-components/Card';
 import DateRangePicker from "../../../../components/DatePicker/DateRangePickerWrapper";
 
 const PaymentsWidget = () => {
   return (
-    <Card>
+    <Card className="m-t-10 m-b-30">
       <Container>
         <Row>
           <Col xs={12}>
             <CardBody>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'baseline'
-                }}
-              >
-                <CardTitle>Payments</CardTitle>
-                <Link to='invoices'><GhostButton>My Invoices</GhostButton></Link>
-              </div>
-              <Table bordered responsive>
+              <CardTitle>
+                Payments
+                <Link to={'/invoices'} className="pull-right">MY INVOICES</Link>
+              </CardTitle>
+              <Table responsive className="custom">
                 <thead>
                   <tr>
-                    <th>{/* Leave this Blank */}</th>
-                    <th>
-                      {/* Date Picker for Borrower's Invoices https://github.com/bitpopulous/platform/issues/97 */}
-                      {/*Styling of React-Dates is FUD */}
-                      {/*<DateRangePicker/>*/}
-                      Invoices
-                    </th>
+                    <th><i className="fa fa-refresh"></i> INVESTMENTS</th>
+                    <th>Paid-in Period<br/><span style={{'textDecoration': 'underline'}}>10-10-2017 - 11-10-2017</span></th>
                     <th>Awaiting Dues</th>
-                    <th>Anticipated</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>Investments</strong></td>
+                    <td><strong>Principal</strong></td>
                     <td>10,500,000.00</td>
-                    <td>500,000.00</td>
                     <td>500,000.00</td>
                   </tr>
                   <tr>
                     <td><strong>Rate</strong></td>
                     <td>500,000.00</td>
                     <td>20,000.00</td>
-                    <td>20,000.00</td>
                   </tr>
                   <tr>
                     <td><strong>Penalties</strong></td>
                     <td>3,000.00</td>
                     <td>2,000.00</td>
-                    <td>-</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Totals</strong></td>
-                    <td><strong>11,023,000.00</strong></td>
-                    <td><strong>113,000.00</strong></td>
-                    <td><strong>522,000.00</strong></td>
                   </tr>
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td>Totals</td>
+                    <td>11,023,000.00</td>
+                    <td>113,000.00</td>
+                  </tr>
+                </tfoot>
               </Table>
               <hr />
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'baseline'
-                }}
-              >
-                <p>
-                  Coming payments amounts in 7 days = -10,000,000.00
-                </p>
-                <GhostButton to='invoices'>See These Invoices</GhostButton>
-              </div>
+              <p>
+                <img src="./img/icons/alarm.png" width={18} alt="alaram"/>
+                <span className="p-l-10">Coming payments amounts in 7 days = -10,000,000.00</span>
+                <a href="#" className="pull-right">SEE THESE INVOICES</a>
+              </p>
             </CardBody>
           </Col>
         </Row>

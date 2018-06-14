@@ -9,15 +9,17 @@ const CustomStep = (props) => (
   <Step style={{ fontWeight: 'normal' }} {...props} />
 );
 
-const KYCFormSteps = ({ page }) => {
+const KYCFormSteps = props => {
+  const { page, currentUser } = props;
   return (
-    <Steps current={page}>
+    <Steps className="custom" current={page}>
       <Step title="Company" />
-      <Step title="Trading" />
+      {currentUser.isBorrower() &&
+      <Step title="Trading" />}
       <Step title="Personal" />
       <CustomStep title="Review" />
     </Steps>
-  )
+  );
 };
 
 KYCFormSteps.propTypes = {

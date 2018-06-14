@@ -1,12 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Input as InputReactstrap } from 'reactstrap';
+import {Input as InputReactstrap} from 'reactstrap';
 
 /**
  * Wraps Reactstrap's input
  */
 export const Input = styled(InputReactstrap)`
 	border-radius: 1px;
+`;
+
+export const InputInvisible = styled(InputReactstrap)`
+padding: ${props => props.withPadding ? false : 0};
+border: none;
+color: #434445;
+font-size: 19px;
+&, &:disabled{
+background: none;
+}
+
+&, &:focus, &:active{
+  box-shadow: none;
+}
 `;
 
 export const RangeInput = styled(InputReactstrap).attrs({
@@ -120,5 +134,18 @@ export const RangeInput = styled(InputReactstrap).attrs({
   
   &:focus::-ms-fill-upper {
     background: #FAFAFA;
+  }
+`;
+
+//TODO: For select input need to reset appearance for prevent border radius on macs
+
+export const StyledInput= styled(InputReactstrap)`
+  border-width: 0;
+  border-radius: 0;
+  border-color: #E1E5EB;
+  border-bottom-width: 2px;
+
+  &, &:focus, &:active{
+    box-shadow: none;
   }
 `;

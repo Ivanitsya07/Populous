@@ -134,12 +134,10 @@ const _createUser = (user, push) => {
           return;
         }
 
-        toastr.success('Success', 'Please confirm your email address');
-
         // The createUser method tries to log the user in so
         // we manyally log them out and push them to login
         Meteor.logout(() => {
-          push('/login');
+          push('/login', {showModal: true});
         });
       }
     );

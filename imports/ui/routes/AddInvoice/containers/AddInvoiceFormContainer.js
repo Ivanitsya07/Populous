@@ -8,8 +8,8 @@ import {
 } from '../modules/actions';
 
 const mapStateToProps = ({ addInvoice }) => {
-  const { rejectedFile, fileLoading, fileSaved, currentAmount, uploadedInvoiceId } = addInvoice;
-  return { rejectedFile, fileLoading, fileSaved, currentAmount, uploadedInvoiceId };
+  const { rejectedFile, fileLoading, fileSaved, savedFile, currentAmount, uploadedInvoiceId } = addInvoice;
+  return { rejectedFile, fileLoading, fileSaved, savedFile, currentAmount, uploadedInvoiceId };
 };
 
 const mapDispatchToProps = dispatch => ({

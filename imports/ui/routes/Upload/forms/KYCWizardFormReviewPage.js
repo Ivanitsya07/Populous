@@ -8,90 +8,119 @@ import {
 } from 'meteor/populous:constants';
 
 import Button from '../../../components/styled-components/Button';
+import { Small, P, H5 } from '../../../components/styled-components/Typography/headers';
 
 let KYCWizardFormReviewPage = props => {
-  const { handleSubmit, pristine, previousPage, submitting } = props;
+  const { handleSubmit, pristine, previousPage, submitting, currentUser } = props;
   return (
-    <form onSubmit={handleSubmit}>
-      <Container>
-        <Row>
-          <Col xs={12}>
-            <ListGroup style={{ textAlign: 'left' }}>
-              <ListGroupItem>
-                <h5>Company Information</h5>
-                <p>
-                  <strong>Address Line 1:</strong>
-                  {' '}{props.valuesForReview.addressLine1}
-                </p>
-                <p>
-                  <strong>Address Line 2:</strong>
-                  {' '}{props.valuesForReview.addressLine2}
-                </p>
-                <p><strong>City:</strong> {props.valuesForReview.city}</p>
-                <p>
-                  <strong>Company Description:</strong>
-                  {' '}{props.valuesForReview.companyDescription}
-                </p>
-                <p>
-                  <strong>Company Name:</strong>
-                  {' '}{props.valuesForReview.companyName}
-                </p>
-                <p>
-                  <strong>Company Number:</strong>
-                  {' '}{props.valuesForReview.companyNumber}
-                </p>
-                <p><strong>Country:</strong> {props.valuesForReview.country}</p>
-                <p>
-                  <strong>First Name:</strong> {props.valuesForReview.firstName}
-                </p>
-                <p>
-                  <strong>LastName:</strong> {props.valuesForReview.lastName}
-                </p>
-                <p>
-                  <strong>Postcode:</strong> {props.valuesForReview.postcode}
-                </p>
-              </ListGroupItem>
-              <ListGroupItem>
-                <h5>Company Bank Statements</h5>
-                {props.valuesForReview.bankStatements.length > 0 ? props.valuesForReview.bankStatements.map(
-                  statement => statement.name
-                ) : <p>No Bank Statements</p>}
-              </ListGroupItem>
-              <ListGroupItem>
-                <h5>Trading Volume</h5>
-                <p>
-                  <strong>Currency Selected: </strong>
-                  {props.valuesForReview.currencySelector}
-                </p>
-                <p>
-                  <strong>Average Invoice Value: </strong>
-                  {` ${averageInvoiceValues[props.valuesForReview.averageInvoiceValue]}`}
-                  {' '}{props.valuesForReview.currencySelector ? `${props.currencySelector}` : null}
-                </p>
-                <p>
-                  <strong>Average Invoice Volume: </strong>
-                  {averageInvoiceVolumes[props.valuesForReview.averageInvoiceVolume]}
-                </p>
-              </ListGroupItem>
-              <ListGroupItem>
-                <h5>Personal Identification</h5>
-                {props.valuesForReview.bankStatements.length > 0 ? props.valuesForReview.personalIdentification.map(
-                  personalId => personalId.name
-                ) : <p>No Personal Identification Added</p>}
-              </ListGroupItem>
-            </ListGroup>
-          </Col>
-        </Row>
-      </Container>
-      <div>
-        <div style={{ height: '32px' }}/>
+    <form className="form" onSubmit={handleSubmit}>
+      <H5 opacity={0.7} transform="uppercase" className="text-center m-b-30">
+        Please review provided information
+      </H5>
 
-        <Button className="previous" onClick={previousPage}>
+      <Row className="table-row">
+        <Col className="title" xs={12}>
+          <P>Company Information</P>
+        </Col>
+        {currentUser.isBorrower() &&
+        <Col xs={12}>
+          <label>Company Name</label>
+          <P opacity={0.8}>{props.valuesForReview.companyName}</P>
+        </Col>}
+        {currentUser.isBorrower() &&
+        <Col xs={12}>
+          <label>Company Number</label>
+          <P opacity={0.8}>{props.valuesForReview.companyNumber}</P>
+        </Col>}
+        {currentUser.isBorrower() &&
+        <Col xs={12}>
+          <label>Company Description</label>
+          <P opacity={0.8}>{props.valuesForReview.companyDescription}</P>
+        </Col>}
+        {currentUser.isBorrower() &&
+        <Col xs={12} sm={6}>
+          <label>Address</label>
+          <P opacity={0.8}>{props.valuesForReview.addressLine1}</P>
+        </Col>}
+        {currentUser.isBorrower() &&
+        <Col xs={12} sm={6}>
+          <label>{' '}</label>
+          <P opacity={0.8}>{props.valuesForReview.addressLine2}</P>
+        </Col>}
+        {currentUser.isBorrower() &&
+        <Col xs={12} sm={4}>
+          <label>City</label>
+          <P opacity={0.8}>{props.valuesForReview.city}</P>
+        </Col>}
+        {currentUser.isBorrower() &&
+        <Col xs={12} sm={2}>
+          <label>Postal Code</label>
+          <P opacity={0.8}>{props.valuesForReview.postcode}</P>
+        </Col>}
+        {currentUser.isBorrower() &&
+        <Col xs={12} sm={6}>
+          <label>Country</label>
+          <P opacity={0.8}>{props.valuesForReview.country}</P>
+        </Col>}
+        <Col xs={12}>
+          <label>Bank Statements</label>
+          {props.valuesForReview.bankStatements.length > 0 ? props.valuesForReview.bankStatements.map(
+                (statement, i) => <P className="blue" key={i}>{statement.name}</P>
+              ) : <P opacity={0.8}>No Bank Statements</P>}
+        </Col>
+
+        {currentUser.isBorrower() &&
+        <Col className="title" xs={12}>
+          <P>Trading Volume</P>
+        </Col>}
+        {currentUser.isBorrower() &&
+        <Col xs={12} sm={6}>
+          <label>Expected Monthly Volume</label>
+          <P opacity={0.8}>{averageInvoiceVolumes[props.valuesForReview.averageInvoiceVolume]}</P>
+        </Col>}
+        {currentUser.isBorrower() &&
+        <Col xs={12} sm={6}>
+          <label>Expected Average Value</label>
+          <P opacity={0.8}>{props.valuesForReview.currencySelector ? `${props.valuesForReview.currencySelector}` : null}
+            {' '}{` ${averageInvoiceValues[props.valuesForReview.averageInvoiceValue]}`}</P>
+        </Col>}
+
+        <Col className="title" xs={12}>
+          <P>Company Contact Person</P>
+        </Col>
+        <Col xs={12} sm={6}>
+          <label>First Name</label>
+          <P opacity={0.8}>{props.valuesForReview.firstName}</P>
+        </Col>
+        <Col xs={12} sm={6}>
+          <label>Last Name</label>
+          <P opacity={0.8}>{props.valuesForReview.lastName}</P>
+        </Col>
+        {currentUser.isBorrower() &&
+        <Col xs={12}>
+          <label>Title/Position</label>
+          <P opacity={0.8}>{props.valuesForReview.title}</P>
+        </Col>}
+        {!currentUser.isBorrower() &&
+        <Col xs={12}>
+          <label>Country</label>
+          <P opacity={0.8}>{props.valuesForReview.country}</P>
+        </Col>}
+        <Col xs={12}>
+          <label>ID Document</label>
+            {props.valuesForReview.bankStatements.length > 0 ? 
+              props.valuesForReview.personalIdentification.map((personalId, i) => <P className="blue" key={i}>{personalId.name}</P>) :
+              <P opacity={0.8}>No Personal Identification Added</P>}
+        </Col>
+      </Row>
+
+      <div className="text-center m-t-40">
+        <Button className="previous" onClick={previousPage} width="160px">
           Previous
         </Button>
         {' '}
-        <Button primary type="submit" disabled={pristine || submitting}>
-          Submit KYC Data
+        <Button primary type="submit" disabled={pristine || submitting} width="160px">
+          Submit Data
         </Button>
       </div>
     </form>

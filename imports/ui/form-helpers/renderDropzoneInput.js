@@ -1,24 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
-import { Button, Card, Fade } from 'reactstrap';
-import FontAwesome from 'react-fontawesome';
+import { Button, Card, Fade, Row, Col } from 'reactstrap';
+import { Small, P } from '../components/styled-components/Typography/headers';
 
 const dropzoneStyle = {
-  width: '100%',
-  height: '100%',
-  cursor: 'pointer'
 };
 
 // Because Files are usually uploading by
 // people clicking a button and bringing up a File window
 const fakeButton = {
-  backgroundColor: '#373d5c',
+  backgroundColor: '#5ea0f3',
   color: '#fff',
-  maxWidth: '163px',
+  maxWidth: '210px',
   padding: '6px 4px',
   margin: 'auto',
-  marginBottom: '10px'
+  textTransform: 'uppercase',
+  cursor: 'pointer'
 };
 
 // Originally Taken from
@@ -30,52 +28,42 @@ const renderDropzoneInput = props => {
   const removeFileFromFilesArray = index =>
     props.input.onChange(() => props.input.value.splice(index, 1));
   return (
-    <div>
-      <Dropzone
-        name={props.name}
-        onDrop={(filesToUpload, e) => props.input.onChange(filesToUpload)}
-        style={dropzoneStyle}
-      >
-        <Card>
-          <div style={{ textAlign: 'center', padding: '8px' }}>
-            <FontAwesome name="file" />
-            <h6>Drop your {props.uploadFileTypeDesc} here</h6>
-            <p>or</p>
-            <div style={fakeButton}>
-              Select Files
-            </div>
-            <small>
-              Accepted formats: {props.acceptedFiles}
-            </small>
+    <Row className="m-t-10">
+      <Col className="text-center" xs={12} md={files.length > 0 ? 6 : 12}>
+        <p><small>{props.uploadFileTypeDesc}</small></p>
+        <Dropzone
+          name={props.name}
+          onDrop={(filesToUpload, e) => props.input.onChange(filesToUpload)}
+          style={dropzoneStyle}
+        >
+          <div style={fakeButton}>
+            <i className="fa fa-upload fa-fw"></i> Upload Documents
           </div>
-        </Card>
-      </Dropzone>
+        </Dropzone>
+        {props.meta.touched &&
+          props.meta.error &&
+          <span className="error">{props.meta.error}</span>}
+      </Col>
 
-      <div style={{ height: '8px' }} />
-
-      {props.meta.touched &&
-        props.meta.error &&
-        <span className="error">{props.meta.error}</span>}
-
-      <Fade in={files.length > 0}>
-        {files &&
+      <Fade className="col" in={files.length > 0}>
+        {files.length > 0 &&
           Array.isArray(files) &&
-          <strong><p>Uploaded {props.uploadFileTypeDesc}:</p></strong>}
+          <p className="m-b-10"><small>Already Uploaded</small></p>}
         {files &&
           Array.isArray(files) &&
           files.map((file, i) =>
-            <p key={i}>
-              {` ${file.name} `}
-              <Button outline color="danger" size="sm">
-                <FontAwesome
-                  name="times"
-                  onClick={e => removeFileFromFilesArray(i)}
-                />
-              </Button>
-            </p>
+            <Row className="border-row" key={i}>
+              <Col xs={10}>
+                <P opacity={0.8
+                }>{` ${file.name} `}</P>
+              </Col>
+              <Col xs={2} className="text-right">
+                <a href="javascript:;" onClick={e => removeFileFromFilesArray(i)}><img src="./img/icons/delete.png" height={18} /></a>
+              </Col>
+            </Row>
           )}
       </Fade>
-    </div>
+    </Row>
   );
 };
 

@@ -4,11 +4,11 @@ import { Form, Label } from 'reactstrap';
 import Button from '../../../components/styled-components/Button'
 import { Input } from '../../../components/styled-components/Inputs';
 
-const PasswordResetForm = ({ sendPasswordResetEmail }) => (
+const TwoFAKeyResetForm = ({ sendTwoFAKeyResetEmail }) => (
   <form
     onSubmit={e => {
       e.preventDefault();
-      sendPasswordResetEmail(e.target.email.value);
+      sendTwoFAKeyResetEmail(e.target.email.value);
     }}
   >
     <Label style={{ display: 'block' }}>
@@ -19,4 +19,4 @@ const PasswordResetForm = ({ sendPasswordResetEmail }) => (
   </form>
 );
 
-export default PasswordResetForm;
+export default TwoFAKeyResetForm;

@@ -18,7 +18,7 @@ const saveKYCData = formData => {
     delete KYCData.bankStatements;
 
     // Save the data
-    currentUser.saveKYCData(KYCData, (err, user) => {
+    currentUser.saveKYCData(KYCData, currentUser.isBorrower(), (err, user) => {
       if (err) {
         toastr.error('Error while saving', err.reason);
       } else {

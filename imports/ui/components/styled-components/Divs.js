@@ -54,3 +54,7 @@ export const Page = styled.div`
 export const Content = styled.div`
   min-height: calc(100vh - 112px);
 `;
+
+export const UnderLineDiv = styled.div`
+    border-bottom: solid 2px #E1E5EB;
+`;

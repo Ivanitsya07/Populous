@@ -10,19 +10,21 @@ const Button = styled.button.attrs({
   type: props => `${props.type}` || 'button',
   disabled: props => !!props.disabled
 })`
-	/* Adapt the colours based on primary prop */
-	font-size: ${props => props.size || '1em'};
-	background: ${props => (props.primary ? props.theme.colors.primary : '#fff')};
-	color: ${props => (props.primary ? '#fff' : props.theme.colors.primary)};
+  /* Adapt the colours based on primary prop */
+  width: ${props => (props.width ? `calc(${props.width} - 6px)` : 'unset')};
+  font-size: ${props => props.size || '1em'};
+  background: ${props => (props.primary ? props.theme.colors.primary : '#fff')};
+  color: ${props => (props.primary ? '#fff' : props.theme.colors.primary)};
   cursor: pointer;
-	padding: 0.66em 1.33em;
-	border: ${props =>
+  padding: ${props => (props.width ? '0.65em 0.8em' : '0.65em 1.2em')};
+  margin: 2px 3px 0;
+  border: ${props =>
     props.primary
       ? '1px solid transparent'
       : `1px solid ${props.theme.colors.primary}`};
-	border-radius: 2px;
-	text-transform: uppercase;
-	font-family: 'PT Sans', sans-serif;
+  border-radius: 0px;
+  text-transform: uppercase;
+  font-family: 'PT Sans', sans-serif;
   letter-spacing: 1px;
   // Pseudo selectors work as well
   &:hover {
@@ -30,7 +32,7 @@ const Button = styled.button.attrs({
       props.primary
         ? props.theme.colors.secondary
         : props.theme.colors.primary};
-	  color: #fff;
+    color: #fff;
   }
   &:disabled {
     background: #77adf2;

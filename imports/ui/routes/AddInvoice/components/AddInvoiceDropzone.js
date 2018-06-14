@@ -1,67 +1,80 @@
 import React from 'react';
-import { Alert } from 'reactstrap';
+import { UncontrolledAlert } from 'reactstrap';
 import Dropzone from 'react-dropzone';
-import FontAwesome from 'react-fontawesome';
+import { Document, Page, setOptions } from 'react-pdf/build/entry.noworker';
+
+setOptions({
+  cMapUrl: 'cmaps/',
+  cMapPacked: true,
+});
 
 const dropzoneStyle = {
   width: '100%',
-  height: '100%',
-  cursor: 'pointer'
+  height: '400px',
+  cursor: 'pointer',
+  border: '2px dashed #A5ACB5',
+  posistion: 'relative',
+  textAlign: 'center'
 };
 
-// Because Files are usually uploading by
-// people clicking a button and bringing up a File window
-const fakeButton = {
-  backgroundColor: '#373d5c',
-  padding: '6 12 12 6',
-  color: '#fff'
+const resultStyle = {
+  cursor: 'pointer',
+  border: '2px solid #A5ACB5',
+  posistion: 'relative',
+  textAlign: 'center'
+};
+
+const iconStyle = {
+  position: 'relative',
+  top: '50%',
+  transform: 'translateY(-50%)'
+};
+
+const btnStyle = {
+  position: 'relative',
+  top: 'calc(100% - 100px)',
+  transform: 'translateY(-50%)'
 };
 
 const AddInvoiceDropzone = ({
   uploadInvoiceFile,
   rejectedFile,
   fileLoading,
-  fileSaved
+  fileSaved,
+  savedFile
 }) =>
   <div>
     { !fileLoading &&
       !fileSaved &&
       <Dropzone
         onDrop={uploadInvoiceFile}
-        accept=".pdf, .doc, .docx, .pages, .xls, .xlsx, .numbers"
+        accept=".pdf"
         style={dropzoneStyle}
+        disablePreview={true}
+        className="custom-dropzone"
       >
-        <Alert color={'info'}>
-          <div style={{ textAlign: 'center' }}>
-            <FontAwesome name="file" />
-            <h6>Drop your invoice file here</h6>
-            <p>or</p>
-            <div style={fakeButton}>
-              Select File
-            </div>
-            <small>
-              Accepted formats: .pdf, .doc, .docx, .pages, .xls, .xlsx, .numbers
-            </small>
-          </div>
-        </Alert>
+        <img src="./img/img-invoice-icon.png" height={80} style={iconStyle} />
+        <div className="text-center" style={btnStyle}>
+          <a href="javascript:;">UPLOAD INVOICE</a>
+        </div>
       </Dropzone>}
 
     {fileLoading &&
-      <Alert color="info">
-        <div style={{ textAlign: 'center' }}>
-          Uploading to IPFS
-        </div>
-      </Alert>}
-    {fileSaved && <Alert color="success"><div>File saved</div></Alert>}
+      <div style={dropzoneStyle}>
+        <span style={iconStyle}>Uploading to IPFS</span>
+      </div>}
+    {fileSaved && savedFile &&
+      <div style={resultStyle}>
+        <Document file={savedFile}>
+          <Page className="custom" pageNumber={1} />
+        </Document>
+      </div>}
 
     {rejectedFile &&
-      <Alert color="danger">
-        <p>
-          '{rejectedFile.name}' isn't the right format,
-          please upload your invoice as a .pdf.
-        </p>
-      </Alert>}
-
+      <UncontrolledAlert color="danger">
+        <b>{rejectedFile.name}</b> isn't the right format,
+        please upload your invoice as PDF.
+      </UncontrolledAlert>}
   </div>;
 
 export default AddInvoiceDropzone;

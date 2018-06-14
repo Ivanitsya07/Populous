@@ -29,7 +29,7 @@ export default class NavigationLoggedOut extends React.Component {
         <Navbar dark expand>
           <NavbarToggler right="true" onClick={this.toggle} />
           <Link to="/" className="navbar-brand">
-            <img src="./logo.png" alt="Populous" height={33} />
+            <img src="./img/logo.png" alt="Populous" height={33} />
           </Link>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>

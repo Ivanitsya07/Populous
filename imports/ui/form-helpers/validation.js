@@ -55,7 +55,7 @@ export const validateAddInvoice = values => {
     errors.SaleGoal= 'Required, please enter a sale goal.';
   }
 
-  if (values.SaleGoal < values.Amount) {
+  if (values.SaleGoal > values.Amount) {
     errors.SaleGoal= 'Please select a sale goal less than the amount offered.';
   }
 

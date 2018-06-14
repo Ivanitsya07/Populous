@@ -12,6 +12,7 @@ export const renderInputReactstrap = props => {
     placeholder,
     helperText,
     type,
+    className,
     meta: { touched, error }
   } = props;
 
@@ -25,7 +26,7 @@ export const renderInputReactstrap = props => {
 
   return valid
     // If valid, don't have the valid prop on <Input/>, we don't want green borders
-    ? <FormGroup color={classes}>
+    ? <FormGroup color={classes} className={className}>
         <Label>{label}</Label>
         <Input
           type={type}
@@ -41,7 +42,7 @@ export const renderInputReactstrap = props => {
         {touched && error && <FormFeedback>{error}</FormFeedback>}
       </FormGroup>
     // If not valid, add the valid prop
-    : <FormGroup color={classes}>
+    : <FormGroup color={classes} className={className}>
         <Label>{label}</Label>
         <Input
           type={type}

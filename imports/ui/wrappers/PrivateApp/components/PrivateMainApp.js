@@ -61,14 +61,7 @@ class PrivateMainApp extends React.Component {
   }
 
   render() {
-    const sidebar = <SidebarContent onSetOpen={this.onSetOpen} />;
-
-    const contentHeader = (
-      <span>
-        {!this.state.docked &&
-         <a onClick={this.menuButtonClick} href="#" style={styles.contentHeaderMenuLink}>=</a>}
-        <span> React Sidebar</span>
-      </span>);
+    const sidebar = <SidebarContent onSetOpen={this.onSetOpen} currentUser={this.props.currentUser} />;
 
     const sidebarProps = {
       sidebar: sidebar,
@@ -86,17 +79,14 @@ class PrivateMainApp extends React.Component {
 
     return (
       <Sidebar {...sidebarProps}>
-        {/* <MaterialTitlePanel title={contentHeader}>
-        
-        </MaterialTitlePanel> */}
         <Page >
           <Navigation user={this.props.currentUser} slideMenuHandler={this.slideMenuHandler} />
           <Content>
             <Container onClick={() => {this.setState({open: false})}}>
             <Route exact path="/" component={this.props.dashboard} />
             <BorrowerOnlyRoute exact path="/add-invoice" component={AddInvoice} />
-            <BorrowerOnlyRoute exact path="/invoices" component={Invoices} />
-            <BorrowerOnlyRoute exact path="/invoice/:invoiceId" component={Invoice} />
+            <Route exact path="/invoices" component={Invoices} />
+            <Route exact path="/invoice/:invoiceId" component={Invoice} />
             <Route exact path="/wallet" component={Wallet} />
             <Route exact path="/settings" component={Settings} />
             {/* This route is only accessible to accounts that are unverified */}

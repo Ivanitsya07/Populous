@@ -27,7 +27,7 @@ export const renderSelectReactstrap = ({
         </option>
       )}
     </Input>
-    <FormFeedback>{touched && error && <span> {error} </span>}</FormFeedback>
+    <FormFeedback>{touched && error && <span className="error"> {error} </span>}</FormFeedback>
   </FormGroup>;
 
 export const renderCurrencySelector = ({
@@ -47,7 +47,7 @@ export const renderCurrencySelector = ({
             </option>
           )}
         </InputRS>
-        {error && <span> {error} </span>}
+        {touched && error && <span className="error"> {error} </span>}
       </FormGroup>
     </div>
   );
@@ -64,5 +64,5 @@ export const renderCountrySelector = ({ input, meta: { touched, error } }) =>
         </option>
       )}
     </InputRS>
-    {touched && error && <span> {error} </span>}
+    {touched && error && <span className="error"> {error} </span>}
   </FormGroup>;

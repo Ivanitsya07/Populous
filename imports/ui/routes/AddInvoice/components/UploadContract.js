@@ -5,45 +5,40 @@ import { Alert } from 'reactstrap';
 
 const dropzoneStyle = {
   width: '100%',
-  height: '100%',
-  cursor: 'pointer'
+  height: '360px',
+  cursor: 'pointer',
+  border: '2px dashed #A5ACB5',
+  posistion: 'relative',
+  textAlign: 'center'
 };
 
-// Because Files are usually uploading by
-// people clicking a button and bringing up a File window
-const fakeButton = {
-  backgroundColor: '#373d5c',
-  padding: '6 12 12 6',
-  color: '#fff'
+const iconStyle = {
+  position: 'relative',
+  top: '50%',
+  transform: 'translateY(-50%)'
+};
+
+const btnStyle = {
+  position: 'relative',
+  top: 'calc(100% - 105px)',
+  transform: 'translateY(-50%)'
 };
 
 const UploadContract = ({ upload, rejectedFile }) =>
   <div>
-    <Dropzone onDrop={upload} accept=".pdf">
-      <Alert color={'info'}>
-        <div style={{ textAlign: 'center' }}>
-          <FontAwesome name="file" />
-          <h6>Drop your invoice file here</h6>
-          <p>or</p>
-          <div style={fakeButton}>
-            Select File
-          </div>
-          <small>
-            PDF only
-          </small>
-        </div>
-      </Alert>
+    <Dropzone onDrop={upload} accept=".pdf" style={dropzoneStyle}>
+      <img src="./img/img-contract-icon.png" height={80} style={iconStyle} />
+      <div className="text-center" style={btnStyle}>
+        <a href="javascript:;">UPLOAD SIGNED CONTRACT</a>
+      </div>
     </Dropzone>
 
     {rejectedFile &&
       rejectedFile.name.includes('.pdf') &&
       <Alert color="danger">
-        <p>
-          '{rejectedFile.name}' isn't the right format,
-          please upload your invoice as a .pdf.
-        </p>
+        <b>{rejectedFile.name}</b> isn't the right format,
+          please upload your invoice as a PDF.
       </Alert>}
-    }
   </div>;
 
 export default UploadContract;

@@ -50,11 +50,11 @@ class Navigation extends React.Component {
           className="header" color="faded" dark expand="lg"
         >
           <NavbarToggler onClick={this.toggle} />
-          <NavbarBrand href="/"><img src="./logo.png" alt="Populous" height={33} /></NavbarBrand>
+          <NavbarBrand href="/"><img src="./img/logo.png" alt="Populous" height={33} /></NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink
+                <NavLink className="icon-link"
                   href="#logout"
                   onClick={e => {
                     e.preventDefault();
@@ -69,12 +69,7 @@ class Navigation extends React.Component {
                     });
                   }}
                 >
-                  Logout
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink disabled>
-                  {user.fullName()}
+                  <img src="./img/icons/logout.png" height={20} /><span>Logout</span>
                 </NavLink>
               </NavItem>
             </Nav>

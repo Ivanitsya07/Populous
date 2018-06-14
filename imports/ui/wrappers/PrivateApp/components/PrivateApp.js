@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { Container } from 'reactstrap';
-import { userRoles } from 'meteor/populous:constants';
+import { userRoles, fixtures } from 'meteor/populous:constants';
 
 import {
   BorrowerDashboard,
@@ -22,12 +22,12 @@ import { Page, Content } from '../../../components/styled-components/Divs';
 import Footer from '../../../components/Footer';
 
 import PrivateMainApp from './PrivateMainApp';
+import Spinner from '/imports/ui/components/Spinner';
 
 const PrivateApp = ({ loading, currentUser }) => {
   if (loading) {
 
-    // TODO: Nice full screen loading icon
-    return <div>Loading</div>;
+    return <div><Spinner /></div>;
   }
 
   if (!currentUser) {
@@ -37,7 +37,10 @@ const PrivateApp = ({ loading, currentUser }) => {
   }
 
   // Make sure the user has 2 factor auth setup
-  if (!currentUser.twoFAKey) {
+  // Disable 2FA for users from fixtures
+  const defaultUsersEmails = Object.values(fixtures.users).map(user => user.email);
+
+  if (!currentUser.twoFAKey && !defaultUsersEmails.includes(currentUser.emailAddress())) {
     return (
       <Page>
         <NavigationEmpty user={currentUser} />
@@ -65,8 +68,8 @@ const PrivateApp = ({ loading, currentUser }) => {
     //     <Container>
     //       <Route exact path="/" component={Dashboard} />
     //       <BorrowerOnlyRoute exact path="/add-invoice" component={AddInvoice} />
-    //       <BorrowerOnlyRoute exact path="/invoices" component={Invoices} />
-    //       <BorrowerOnlyRoute exact path="/invoice/:invoiceId" component={Invoice} />
+    //       <Route exact path="/invoices" component={Invoices} />
+    //       <Route exact path="/invoice/:invoiceId" component={Invoice} />
     //       <Route exact path="/wallet" component={Wallet} />
     //       <Route exact path="/settings" component={Settings} />
     //       {/* This route is only accessible to accounts that are unverified */}

@@ -21,7 +21,7 @@ class Invoice extends React.Component {
     } = this.props;
 
     if (loading) {
-      return <div>Loading...</div>;
+      return <div><Spinner /></div>;
     }
 
     const borrower = invoice.borrower();

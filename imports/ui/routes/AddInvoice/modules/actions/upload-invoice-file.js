@@ -5,6 +5,7 @@ import { File } from 'meteor/populous:api';
 import {
   FILE_LOADING,
   FILE_SAVED,
+  SET_SAVED_FILE,
   SET_REJECTED_FILE,
   SET_UPLOADED_INVOICE_ID,
 } from '../';
@@ -60,6 +61,7 @@ const uploadInvoiceFile = (acceptedFiles, rejectedFiles) => {
         }
 
         dispatch({ type: FILE_SAVED, saved: true });
+        dispatch({ type: SET_SAVED_FILE, file: invoiceFile });
         dispatch({ type: SET_UPLOADED_INVOICE_ID, _id });
       });
     };
