@@ -2,9 +2,11 @@ import IPFS from 'ipfs';
 import fs from 'fs';
 import { Writable } from 'stream';
 
-const ipfs = new IPFS();
+const ipfs = new IPFS({ repo: String(Math.random() + Date.now()) });
 
 Meteor.methods({
+
+  
 
   // Add a file to IPFS and return a promise containing
   // an error or the file object
@@ -12,6 +14,7 @@ Meteor.methods({
     if (!path || !content) {
       throw new Meteor.Error('Error', 'Malformed request');
     }
+    ipfs.once('ready', () => console.log('IPFS node is ready'));
 
     content = Buffer.from(content);
 
