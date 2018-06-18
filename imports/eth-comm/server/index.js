@@ -5,7 +5,7 @@ import PopulousEthComm from '@populous/populous-eth-comm';
 
 // Make sure the path is right when bundling the app
 const contractsPath = `${process.env.PWD}/../populous-smartcontracts/build/contracts`;
-const ethComm = new PopulousEthComm({ contractsPath });
+const ethComm = new PopulousEthComm({ contractsPath});
 
 Meteor.methods({
 
